@@ -5,11 +5,25 @@ import React from 'react';
 
 
 class Tasklist extends React.Component {
+
+task = [
+  {
+    text: 'this is task n1',
+    checkflag: false,
+    token: '12345'
+  },
+  {
+    text: 'this is task n2',
+    checkflag: true,
+    token: '12345'    
+  }
+]
+
  render() {
     return (
       <div className="tasklist-container">
         <Head />
-        <Body />
+        <Body task={this.task}/>
         <Footer />
       </div>
     )
@@ -60,26 +74,32 @@ class TaskCategory extends React.Component {
 }
 
 class Body extends React.Component {
+
   render() {
     return(
       <div className="tasklist-body">
         <BodyCreateTask />
-        <BodyTask />
+        <BodyTask task={this.props.task}/>
       </div>
     )
   }
 }
 
 class BodyTask extends React.Component { /* */
+
+
   render(){
     return(
-      <div className="tl-body-task">
-        <input type="checkbox" className="task-cb"/>
-        <span>this is task</span>
-        <button className="task-remove">Remove task</button>
-      </div>
+          this.props.task.map((el, i) => {
+           return( <div className="tl-body-task" key={i}>
+              <input type="checkbox" className="task-cb" />
+              <span>{el.text}</span>
+              <button className="task-remove" onClick={() => {this.props.task.map(el => {console.log(el)})}}>Remove task</button>
+            </div>)
+          })
     )
   }
+  
 }
 
 class BodyCreateTask extends React.Component {
